@@ -1,7 +1,27 @@
-h1 {color:purple;
+h1 {
+  color: #fddb3a;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-	}
-	
-section.per_info {
-	background-color: #FF22cc;
+h2 {
+  color: #52575d;
+}
+
+h3 {
+  color: #41444b;
+}
+
+body {
+  background-color: #f6f4e6;
+  color: #41444b;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+hr {
+  border-style: none;
+  border-top-style: dotted;
+  border-top-width: 5px;
+  height: 0px;
+  width: 10%;
+  border-color: #aaaaaa;
 }
