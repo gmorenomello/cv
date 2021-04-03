@@ -1,17 +1,21 @@
 h1 {
+  margin-top: 0;
   color: #fddb3a;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 h2 {
+  margin-top: 0;
   color: #52575d;
 }
 
 h3 {
+  margin-top: 0;
   color: #41444b;
 }
 
 body {
+  margin: 0;
   background-color: #f6f4e6;
   color: #41444b;
   font-family: Arial, Helvetica, sans-serif;
@@ -24,4 +28,18 @@ hr {
   height: 0px;
   width: 10%;
   border-color: #aaaaaa;
+}
+
+section.per_info {
+  margin: 0;
+  background-color: #52575d;
+  height: 200px;
+  width: 100%;
+}
+
+section.research_inte {
+  margin: 0;
+  background-color: red;
+  height: 200px;
+  width: 200px;
 }
