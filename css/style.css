@@ -111,9 +111,8 @@ hr {
 
 .research_interest {
   margin: 0;
-  background-color: red;
   min-height: 200px;
-  width: 200px;
+  width: 100%;
 }
 
 nav>.navbar .brand {

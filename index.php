@@ -11,7 +11,6 @@
 	<title> Guga's Personal Website</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css">
-	</link>
 
 </head>
 
@@ -38,10 +37,10 @@
     <div class="container-lg">
       <div class="row">
         <div class="col-md-6 col-sm-12">
-          Hi! This is Gustavo. I am a former Neuroscientist, psychologist and graphic designer. Now I use computational methods to better understand how biological and psychological processes may give rise to intelligent behaviors. My main focus is on biologically plausible algorithms for causal inference, associative learning and sense of agency.</p>
-          The ultimate goal is not only to make an intelligent tool to solve a problem, but to make an artificial intelligence which behaves as the natural intelligence, so it can help to better understand ourselves.</p>
+          <p>Hi! This is Gustavo. I am a former Neuroscientist, psychologist and graphic designer. Now I use computational methods to better understand how biological and psychological processes may give rise to intelligent behaviors. My main focus is on biologically plausible algorithms for causal inference, associative learning and sense of agency.</p>
+          <p>The ultimate goal is not only to make an intelligent tool to solve a problem, but to make an artificial intelligence which behaves as the natural intelligence, so it can help to better understand ourselves.</p>
 
-          I built this website to share with you my learning notes. Send me an email: gmoreno.mello AT gmail.com if you have questions or find errors.</p>
+          <p>I built this website to share with you my learning notes. Send me an email: gmoreno.mello AT gmail.com if you have questions or find errors.</p>
 
           <h3>Brief Information</h3>
           <strong>Head of the <a class="link-secondary" href="#">academic group in Artificial Intelligence </a></strong><br>
@@ -148,8 +147,6 @@ Integer lacinia enim sapien. Nulla facilisi. Morbi pellentesque semper ex non al
     <?php
     include('includes/footer.php');
     ?>
-
-  </div>
 	</footer>
 
   <script>
@@ -163,6 +160,10 @@ Integer lacinia enim sapien. Nulla facilisi. Morbi pellentesque semper ex non al
     } else {
       mybutton.style.display = "none";
     }
+  }
+  function scrollToTop() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
   }
   function topFunction() {
   document.body.scrollTop = 0;

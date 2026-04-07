@@ -11,7 +11,6 @@
 	<title> Guga's Personal Website</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css">
-	</link>
 
 </head>
 
@@ -48,8 +47,7 @@
 			<div class="row" id="proj_pos">
         <div class="col-md-6 col-sm-12">
 					<h3>projects</h3>
-          Hi! This is Gustavo. I am a former Neuroscientist, psychologist and graphic designer. Now I use computational methods to better understand how biological and psychological processes may give rise to intelligent behaviors. My main focus is on biologically plausible algorithms for causal inference, associative learning and sense of agency.</p>
-          T
+          <p>Hi! This is Gustavo. I am a former Neuroscientist, psychologist and graphic designer. Now I use computational methods to better understand how biological and psychological processes may give rise to intelligent behaviors. My main focus is on biologically plausible algorithms for causal inference, associative learning and sense of agency.</p>
         </div>
         <div class="col-md-6 col-sm-12">
           <h3>Positions</h3>
@@ -78,8 +76,6 @@
     <?php
     include('includes/footer.php');
     ?>
-
-  </div>
 	</footer>
 
   <script>
@@ -93,6 +89,10 @@
     } else {
       mybutton.style.display = "none";
     }
+  }
+  function scrollToTop() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
   }
   function topFunction() {
   document.body.scrollTop = 0;
