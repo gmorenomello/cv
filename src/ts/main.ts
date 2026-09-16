@@ -152,6 +152,32 @@ function initLinkFilter(): void {
   });
 }
 
+/* ---------- Opt-in third-party timeline ---------- */
+
+function initTimeline(): void {
+  const button = document.querySelector<HTMLButtonElement>('[data-load-timeline]');
+  const box = document.getElementById('timeline');
+  if (!button || !box) return;
+
+  button.addEventListener('click', () => {
+    button.disabled = true;
+    button.textContent = 'Loading timeline…';
+    const script = document.createElement('script');
+    script.src = 'https://platform.twitter.com/widgets.js';
+    script.async = true;
+    script.charset = 'utf-8';
+    script.onload = () => {
+      box.setAttribute('data-loaded', '');
+      button.hidden = true;
+    };
+    script.onerror = () => {
+      button.disabled = false;
+      button.textContent = 'Timeline could not be loaded. Try again';
+    };
+    document.body.append(script);
+  });
+}
+
 /* ---------- Boot ---------- */
 
 document.documentElement.classList.add('js');
@@ -163,4 +189,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initEmailLinks();
   initLinkFilter();
+  initTimeline();
 });
