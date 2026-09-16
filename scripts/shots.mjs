@@ -35,6 +35,7 @@ for (const vp of viewports) {
     const context = await browser.newContext({
       viewport: { width: vp.width, height: vp.height },
       colorScheme: scheme,
+      reducedMotion: 'reduce',
       deviceScaleFactor: 1,
     });
     for (const page of pages) {
@@ -86,6 +87,22 @@ for (const vp of viewports) {
     }
     await context.close();
   }
+}
+
+// Live check: with motion enabled, a section revealed by scrolling must reach full opacity.
+{
+  const context = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: 'no-preference' });
+  const tab = await context.newPage();
+  await tab.goto(`${base}/index.html`, { waitUntil: 'load' });
+  const opacity = await tab.evaluate(async () => {
+    const target = document.querySelectorAll('[data-reveal]')[1];
+    target.scrollIntoView({ block: 'center' });
+    await new Promise((r) => setTimeout(r, 400));
+    return Number(getComputedStyle(target).opacity);
+  });
+  console.log(`reveal    live     motion ${opacity >= 0.99 ? 'ok' : 'FAILED opacity=' + opacity}`);
+  if (opacity < 0.99) problems += 1;
+  await context.close();
 }
 
 await browser.close();

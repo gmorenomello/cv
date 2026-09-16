@@ -19,22 +19,75 @@ function markActiveNavLink(): void {
 
 function syncMobileNav(): void {
   const toggle = document.getElementById('nav-toggle') as HTMLInputElement | null;
-  const label = document.querySelector<HTMLLabelElement>('label[for="nav-toggle"]');
-  if (!toggle || !label) return;
+  if (!toggle) return;
 
-  const update = (): void => {
-    label.setAttribute('aria-expanded', String(toggle.checked));
-  };
-  toggle.addEventListener('change', update);
-  update();
-
-  // Close the menu with Escape
+  // Close the menu with Escape and return focus to the control
   document.addEventListener('keydown', (event: KeyboardEvent) => {
     if (event.key === 'Escape' && toggle.checked) {
       toggle.checked = false;
-      update();
-      label.focus();
+      toggle.focus();
     }
+  });
+
+  // Close the menu when a link inside it is activated
+  document.querySelectorAll<HTMLAnchorElement>('.site-nav a').forEach((link) => {
+    link.addEventListener('click', () => {
+      toggle.checked = false;
+    });
+  });
+}
+
+/* ---------- Theme switch ---------- */
+
+type Theme = 'light' | 'dark';
+
+const THEME_COLORS: Record<Theme, string> = { light: '#faf8f4', dark: '#1b1916' };
+
+function readStoredTheme(): Theme | null {
+  try {
+    const value = localStorage.getItem('theme');
+    return value === 'light' || value === 'dark' ? value : null;
+  } catch {
+    return null;
+  }
+}
+
+function initThemeToggle(): void {
+  const button = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  if (!button) return;
+
+  const root = document.documentElement;
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+  const apply = (chosen: Theme | null): void => {
+    if (chosen) {
+      root.setAttribute('data-theme', chosen);
+    } else {
+      root.removeAttribute('data-theme');
+    }
+    const effective: Theme = chosen ?? (systemDark.matches ? 'dark' : 'light');
+    button.setAttribute('aria-pressed', String(effective === 'dark'));
+    button.setAttribute('aria-label', effective === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    document
+      .querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]')
+      .forEach((meta) => meta.setAttribute('content', THEME_COLORS[effective]));
+  };
+
+  apply(readStoredTheme());
+  button.hidden = false;
+
+  button.addEventListener('click', () => {
+    const next: Theme = button.getAttribute('aria-pressed') === 'true' ? 'light' : 'dark';
+    try {
+      localStorage.setItem('theme', next);
+    } catch {
+      /* storage unavailable: the choice lasts for this page only */
+    }
+    apply(next);
+  });
+
+  systemDark.addEventListener('change', () => {
+    if (!readStoredTheme()) apply(null);
   });
 }
 
@@ -126,6 +179,15 @@ function initLinkFilter(): void {
   };
 
   input.addEventListener('input', apply);
+  document.addEventListener('keydown', (event: KeyboardEvent) => {
+    const active = document.activeElement;
+    const typing = active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement;
+    if (event.key === '/' && !typing && !event.ctrlKey && !event.metaKey && !event.altKey) {
+      event.preventDefault();
+      input.focus();
+      input.select();
+    }
+  });
   input.addEventListener('keydown', (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
       input.value = '';
@@ -167,6 +229,7 @@ document.documentElement.classList.add('js');
 document.addEventListener('DOMContentLoaded', () => {
   markActiveNavLink();
   syncMobileNav();
+  initThemeToggle();
   initScrollToTop();
   initDisabledLinks();
   initEmailLinks();

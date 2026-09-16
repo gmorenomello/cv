@@ -300,3 +300,140 @@ JavaScript succeeding; reveal animation should be an enhancement in CSS.
   from the tab order; the icons themselves stay.
 - Mobile kicker: balanced wrapping and reduced letter-spacing under 52em.
 - Screenshot script scrolls each page before capture.
+
+---
+
+## Round 3 — quick links, CSS reveals, precision (commit `d707f74`)
+
+**What they saw:** quick links under the hero, reveals moved to CSS, roles
+grouped, lab names as the heading, dead footer icons dimmed and unfocusable.
+
+### Phase 1 · Individual reactions
+
+🇨🇳 **Mei:** The first section says "01 About" in the label, "Research" in the
+heading and "Research interests" in the list. Three names for one thing.
+Pick one and the section becomes trustworthy.
+
+🇮🇳 **Priya:** ORCID, Scholar, e-mail. Three pills, exactly what I asked for,
+and they work on my phone with one thumb. This page now answers "how do I
+reach him" in the first screen.
+
+🇯🇵 **Yuki:** My PDF has all the sections this time. I noticed the fade when
+scrolling normally; it is quiet enough that I did not mind it. Quiet enough
+is the standard.
+
+🇧🇷 **Camila:** I can tap the phone number and it dials. I can tap e-mail and
+it opens. This is what "professional" means to me: nothing between me and
+the person.
+
+🇪🇸 **Sofía:** The Links page filter is good but I keep reaching for a
+keyboard shortcut like on GitHub — a slash to jump to the box. Small thing.
+Big thing: Sci-Hub is still there. I understand why. I also understand what
+a rector's office would say.
+
+🇬🇧 **Rosie:** The "Load timeline" box explains itself in three lines before
+the button. It's a button, not a consent form for a mortgage.
+
+🇩🇪 **Lena:** I tabbed through the whole site. Skip link works, the menu
+opens from the keyboard, the dead icons are skipped. The navigation links
+are a few pixels short of a comfortable touch target. And the hamburger
+label is hidden from assistive technology but also carries an expanded
+state, which is contradictory.
+
+🇸🇦 **Noor:** Still no switch. My phone is on light mode where my family can
+see it. I want to turn this page dark at midnight without changing my
+device. That is a choice about a room, not a device.
+
+🇮🇹 **Giulia:** The lab page now leads with "Mørk Lab, Living Dynamics Lab"
+in that big serif — finally it has a name like a place has a name. The
+alumni are three names on three lines. Calm.
+
+🇵🇱 **Kasia:** Look, it works when I print, it works when I scroll fast,
+nothing pretends to be finished when it isn't. I am running out of
+complaints and that is unusual for me.
+
+### Phase 2 · Discussion
+
+**Round 1**
+
+🇸🇦 Noor: The switch. Please.
+🇩🇪 Lena: A switch is trivial; the subtle part is that it must not flash the
+wrong colour when the page opens.
+🇯🇵 Yuki: And it must remember. If I choose dark, dark it stays.
+🇬🇧 Rosie: And if my system already says dark, don't make me press anything.
+
+**Round 2**
+
+🇨🇳 Mei: Naming. "Profile" as the small label, "About" as the heading,
+"Research interests" as the list. One idea per level.
+🇮🇹 Giulia: Yes — and "E-mail" in the pills could say it is the OsloMet
+address, since the Gmail is in the text above.
+🇸🇦 Noor: Agreed. The institutional door is the public door.
+
+**Round 3**
+
+🇪🇸 Sofía: Motion. Some people cannot do fades at all.
+🇯🇵 Yuki: The reveal already respects the system setting.
+🇩🇪 Lena: The reveal does. The hover transitions do not all check it. Make
+the rule global; then there is nothing to audit later.
+🇵🇱 Kasia: Good. Fewer things to audit later is the whole job.
+
+### Phase 3 · Heat check
+
+| | Verdict | Why |
+|---|---|---|
+| 🇨🇳 Mei | 👍 | One naming fix away |
+| 🇮🇳 Priya | 👍 | Reachability solved |
+| 🇯🇵 Yuki | 👍 | Quiet enough |
+| 🇧🇷 Camila | 👍 | Tap and it works |
+| 🇪🇸 Sofía | Mixed | Sci-Hub, and a shortcut |
+| 🇬🇧 Rosie | 👍 | Trim the button copy |
+| 🇩🇪 Lena | Mixed | Touch targets and ARIA contradiction |
+| 🇸🇦 Noor | Mixed | No theme switch yet |
+| 🇮🇹 Giulia | 👍 | The lab has a name now |
+| 🇵🇱 Kasia | 👍 | Out of complaints, suspiciously |
+
+### Phase 4 · Moderator summary
+
+**Consensus (9/10):** the site is now credible; remaining items are
+finishing rather than fixing.
+
+**Consensus (8/10):** an on-page theme switch that remembers the choice and
+never flashes the wrong theme on load.
+
+**Fault lines:**
+- *Sci-Hub / Z-Library.* Unchanged since round 1. Sofía has moved from
+  defending to warning. Still the owner's decision; still not removed.
+
+**Standout insights:**
+- Lena: the hamburger label is `aria-hidden` yet receives `aria-expanded`;
+  the checkbox already conveys state, so the label should carry none.
+- Lena: navigation link height is below 44px.
+- Sofía: a "/" shortcut for the filter is cheap and expected by developers.
+
+**Recommendations, ranked by endorsement:**
+1. Theme switch, persisted, no flash, defers to system until chosen (8).
+2. Global reduced-motion guard for transitions as well as animations (7).
+3. Consistent naming in the first section (7).
+4. Touch targets ≥ 44px on nav and quick links (6).
+5. Shorter timeline copy; e-mail pill labelled as OsloMet (5).
+6. "/" focuses the link filter (4).
+
+### Changes made for iteration 4
+- Theme switch in the header (sun/moon), `data-theme` on the root,
+  persisted in `localStorage`, applied by a two-line inline script before
+  first paint. The button is hidden without JavaScript. Both
+  `theme-color` metas follow the effective theme.
+- Dark tokens now apply for `prefers-color-scheme: dark` unless the visitor
+  chose light, and always when they chose dark.
+- Global `prefers-reduced-motion` rule shortens every transition and
+  animation to 1ms.
+- Hamburger label no longer receives `aria-expanded`; the checkbox conveys
+  state.
+- Navigation links and quick links have a 44px minimum height.
+- First home section: eyebrow "Profile", heading "About", list "Research
+  interests". E-mail pill reads "E-mail (OsloMet)".
+- Timeline copy reduced to one line. "/" focuses the link filter.
+- Screenshot harness runs with reduced motion so full-page captures are
+  faithful, and separately asserts the live reveal reaches full opacity
+  after scrolling.

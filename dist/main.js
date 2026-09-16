@@ -16,21 +16,67 @@ function markActiveNavLink() {
 }
 function syncMobileNav() {
     const toggle = document.getElementById('nav-toggle');
-    const label = document.querySelector('label[for="nav-toggle"]');
-    if (!toggle || !label)
+    if (!toggle)
         return;
-    const update = () => {
-        label.setAttribute('aria-expanded', String(toggle.checked));
-    };
-    toggle.addEventListener('change', update);
-    update();
-    // Close the menu with Escape
+    // Close the menu with Escape and return focus to the control
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && toggle.checked) {
             toggle.checked = false;
-            update();
-            label.focus();
+            toggle.focus();
         }
+    });
+    // Close the menu when a link inside it is activated
+    document.querySelectorAll('.site-nav a').forEach((link) => {
+        link.addEventListener('click', () => {
+            toggle.checked = false;
+        });
+    });
+}
+const THEME_COLORS = { light: '#faf8f4', dark: '#1b1916' };
+function readStoredTheme() {
+    try {
+        const value = localStorage.getItem('theme');
+        return value === 'light' || value === 'dark' ? value : null;
+    }
+    catch {
+        return null;
+    }
+}
+function initThemeToggle() {
+    const button = document.querySelector('[data-theme-toggle]');
+    if (!button)
+        return;
+    const root = document.documentElement;
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const apply = (chosen) => {
+        if (chosen) {
+            root.setAttribute('data-theme', chosen);
+        }
+        else {
+            root.removeAttribute('data-theme');
+        }
+        const effective = chosen ?? (systemDark.matches ? 'dark' : 'light');
+        button.setAttribute('aria-pressed', String(effective === 'dark'));
+        button.setAttribute('aria-label', effective === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+        document
+            .querySelectorAll('meta[name="theme-color"]')
+            .forEach((meta) => meta.setAttribute('content', THEME_COLORS[effective]));
+    };
+    apply(readStoredTheme());
+    button.hidden = false;
+    button.addEventListener('click', () => {
+        const next = button.getAttribute('aria-pressed') === 'true' ? 'light' : 'dark';
+        try {
+            localStorage.setItem('theme', next);
+        }
+        catch {
+            /* storage unavailable: the choice lasts for this page only */
+        }
+        apply(next);
+    });
+    systemDark.addEventListener('change', () => {
+        if (!readStoredTheme())
+            apply(null);
     });
 }
 /* ---------- Scroll to top ---------- */
@@ -102,6 +148,15 @@ function initLinkFilter() {
         }
     };
     input.addEventListener('input', apply);
+    document.addEventListener('keydown', (event) => {
+        const active = document.activeElement;
+        const typing = active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement;
+        if (event.key === '/' && !typing && !event.ctrlKey && !event.metaKey && !event.altKey) {
+            event.preventDefault();
+            input.focus();
+            input.select();
+        }
+    });
     input.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
             input.value = '';
@@ -138,6 +193,7 @@ document.documentElement.classList.add('js');
 document.addEventListener('DOMContentLoaded', () => {
     markActiveNavLink();
     syncMobileNav();
+    initThemeToggle();
     initScrollToTop();
     initDisabledLinks();
     initEmailLinks();
