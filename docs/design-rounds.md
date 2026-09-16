@@ -437,3 +437,115 @@ never flashes the wrong theme on load.
 - Screenshot harness runs with reduced motion so full-page captures are
   faithful, and separately asserts the live reveal reaches full opacity
   after scrolling.
+
+---
+
+## Round 4 — theme switch, accessibility pass (commit `b8c4120`)
+
+**What they saw:** the sun/moon switch, persisted theme with no flash,
+global reduced-motion guard, 44px targets, consistent section naming, the
+"/" shortcut on Links.
+
+### Phase 1 · Individual reactions
+
+🇨🇳 **Mei:** The switch works and remembers. But on a laptop it sits in the
+middle of the header, between the logo and the menu, like a lost button.
+Controls go at the end.
+
+🇮🇳 **Priya:** Everything I asked for is here. I tested it on my flatmate's
+phone in dark mode, then mine in light, and it just did the right thing on
+both. Done, from my side.
+
+🇯🇵 **Yuki:** I printed it again. All sections present. The footer prints as
+a black block, though, and the closed draft boxes print closed. A page
+should know when it is on paper.
+
+🇧🇷 **Camila:** The "Cover to come" — sorry, the boxes on Archive still say
+"Figure". A box that says "Figure" is a box that says nothing.
+
+🇪🇸 **Sofía:** Slash to filter, Escape to clear. It behaves like tools I use
+every day. Sci-Hub is still on the list; I have said my piece three times.
+
+🇬🇧 **Rosie:** "2021 © by Gustavo…" It's 2026. Either he hasn't touched it in
+five years or the year is wrong. Neither is the impression you want.
+
+🇩🇪 **Lena:** I retested the keyboard path: the switch is reachable, the
+menu closes when I choose a link and returns focus properly, the dead icons
+are skipped. One remaining structural gap: there is no documentation of how
+this site is built or deployed, and no page for a wrong address.
+
+🇸🇦 **Noor:** It remembers. It doesn't flash. It doesn't change my phone.
+That is exactly the room I asked for.
+
+🇮🇹 **Giulia:** In dark mode the brick photo band with the yellow letters
+is even better — the whole page becomes a night walk past the campus.
+
+🇵🇱 **Kasia:** Look, at this point I am checking whether the site is
+honest, and it is. The label on the empty archive boxes is the last
+dishonest word on it.
+
+### Phase 2 · Discussion
+
+**Round 1**
+
+🇨🇳 Mei: Switch to the right, after the menu.
+🇩🇪 Lena: On phones it is already at the right; only the desktop order is
+wrong. That is a one-line change.
+🇸🇦 Noor: Agreed. Position, not behaviour.
+
+**Round 2**
+
+🇯🇵 Yuki: Paper. Print should be light, without the menu, with the draft
+boxes open so nothing is hidden.
+🇬🇧 Rosie: And with the year fixed so the paper doesn't look five years
+old.
+🇵🇱 Kasia: A range. 2021 to now. It's true and it shows it's maintained.
+
+**Round 3**
+
+🇩🇪 Lena: A README for whoever maintains this after him, and a not-found
+page.
+🇧🇷 Camila: And rename the grey boxes. "Cover to come" is honest.
+🇪🇸 Sofía: Nobody is going to say anything about Sci-Hub?
+🇮🇹 Giulia: We have. It's his site. It stays flagged.
+
+### Phase 3 · Heat check
+
+| | Verdict | Why |
+|---|---|---|
+| 🇨🇳 Mei | 👍 | Move the switch, then ship |
+| 🇮🇳 Priya | 👍 | Done |
+| 🇯🇵 Yuki | 👍 | Print polish only |
+| 🇧🇷 Camila | 👍 | Rename the boxes |
+| 🇪🇸 Sofía | Mixed | Sci-Hub, on principle |
+| 🇬🇧 Rosie | 👍 | Fix the year |
+| 🇩🇪 Lena | 👍 | Documentation and 404 |
+| 🇸🇦 Noor | 👍 | Exactly right |
+| 🇮🇹 Giulia | 👍 | A night walk past the campus |
+| 🇵🇱 Kasia | 👍 | Honest |
+
+### Phase 4 · Moderator summary
+
+**Consensus (10/10):** the site is ready apart from finishing details; no
+panelist asked for a structural change.
+
+**Fault line:** Sofía alone keeps the Sci-Hub / Z-Library objection open.
+Recorded for the owner; not removed.
+
+**Recommendations, ranked by endorsement:**
+1. Theme switch after the menu on wide screens (8).
+2. Print stylesheet: light, no chrome, disclosures open (7).
+3. Copyright as a range ending in the current year (7).
+4. Rename Archive placeholders to "Cover to come" (6).
+5. README and a 404 page (5).
+
+### Changes made for iteration 5
+- Header actions ordered after the navigation on wide screens.
+- Print stylesheet: light palette, header/footer chrome and controls
+  hidden, draft disclosures expanded, link URLs printed after link text.
+- Copyright reads "2021–2026".
+- Archive placeholders read "Cover to come".
+- `decoding="async"` on photographs.
+- `404.html` in the same design for GitHub Pages.
+- README rewritten for the static stack: structure, build, preview,
+  screenshots, deployment.

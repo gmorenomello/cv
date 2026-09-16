@@ -506,6 +506,17 @@
     gap: var(--space-2);
   }
 
+  @media (min-width: 48em) {
+    .site-nav {
+      order: 2;
+      margin-inline-start: auto;
+    }
+
+    .site-header__actions {
+      order: 3;
+    }
+  }
+
   .theme-toggle {
     inline-size: 2.75rem;
     block-size: 2.75rem;
@@ -1340,7 +1351,9 @@
       [data-reveal] {
         animation: reveal linear both;
         animation-timeline: view();
-        animation-range: entry 0% entry 30%;
+        /* Finish once the section's top edge is 10rem inside the viewport,
+           regardless of how tall the section is. */
+        animation-range: entry 0 entry 10rem;
       }
     }
   }
@@ -1397,5 +1410,89 @@
 
   .stack-lg > * + * {
     margin-block-start: var(--space-5);
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Print
+   ------------------------------------------------------------------- */
+@media print {
+  :root,
+  :root[data-theme='dark'] {
+    --paper-0: #fff;
+    --paper-1: #fff;
+    --paper-2: #f0f0f0;
+    --paper-3: #cfcfcf;
+    --ink-3: #555;
+    --ink-2: #333;
+    --ink-1: #000;
+    --accent: #1a3a8a;
+    --accent-strong: #102a66;
+    --color-rule: #d0d0d0;
+    --color-rule-strong: #a0a0a0;
+    --color-footer-bg: #fff;
+    --color-footer-text: #000;
+    --color-footer-muted: #555;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    font-size: 11pt;
+  }
+
+  .site-header,
+  .to-top,
+  .skip-link,
+  .theme-toggle,
+  .nav-burger,
+  .link-filter,
+  .embed,
+  .social {
+    display: none !important;
+  }
+
+  .photo-band {
+    block-size: 12rem;
+  }
+
+  .draft {
+    border: 1px solid #ccc;
+  }
+
+  .draft[open] summary,
+  .draft summary {
+    display: none;
+  }
+
+  .draft:not([open]) > *:not(summary) {
+    display: block;
+  }
+
+  .section,
+  .hero,
+  .page-head {
+    break-inside: avoid-page;
+    padding-block: 1.5rem;
+  }
+
+  .site-footer {
+    margin-block-start: 2rem;
+    padding-block: 1rem;
+    border-block-start: 1px solid #ccc;
+  }
+
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.85em;
+    color: #555;
+    word-break: break-all;
+  }
+
+  .quick-links a[href^='http']::after,
+  .site-nav a::after {
+    content: none;
   }
 }

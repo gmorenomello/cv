@@ -96,8 +96,8 @@ for (const vp of viewports) {
   await tab.goto(`${base}/index.html`, { waitUntil: 'load' });
   const opacity = await tab.evaluate(async () => {
     const target = document.querySelectorAll('[data-reveal]')[1];
-    target.scrollIntoView({ block: 'center' });
-    await new Promise((r) => setTimeout(r, 400));
+    target.scrollIntoView({ block: 'center', behavior: 'instant' });
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
     return Number(getComputedStyle(target).opacity);
   });
   console.log(`reveal    live     motion ${opacity >= 0.99 ? 'ok' : 'FAILED opacity=' + opacity}`);
