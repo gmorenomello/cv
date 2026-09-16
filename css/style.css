@@ -642,6 +642,50 @@
     margin-block-start: var(--space-3);
   }
 
+  .quick-links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-block-start: var(--space-5);
+  }
+
+  .quick-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-block-size: 2.5rem;
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--color-rule-strong);
+    border-radius: 999px;
+    color: var(--color-text);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-decoration: none;
+    transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out);
+  }
+
+  .quick-links a:hover {
+    border-color: var(--accent);
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+  }
+
+  .quick-links svg {
+    inline-size: 1rem;
+    block-size: 1rem;
+    flex: none;
+  }
+
+  @media (max-width: 51.99em) {
+    .hero__kicker {
+      text-wrap: balance;
+      letter-spacing: 0.06em;
+      max-inline-size: 30ch;
+    }
+  }
+
   .hero__figure {
     position: relative;
     justify-self: end;
@@ -763,6 +807,12 @@
 
   .info-list dd.is-strong {
     font-weight: 600;
+  }
+
+  .info-list dd ul {
+    list-style: none;
+    display: grid;
+    gap: var(--space-1);
   }
 
   @media (max-width: 40em) {
@@ -1134,8 +1184,15 @@
     filter: invert(1) brightness(1.4);
   }
 
-  .social a[href='#!'] {
-    opacity: 0.45;
+  .social a[aria-disabled='true'] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border-style: dashed;
+  }
+
+  .social a[aria-disabled='true']:hover {
+    border-color: oklch(100% 0 0 / 18%);
+    background: transparent;
   }
 
   .site-footer__copy {
@@ -1185,17 +1242,30 @@
     block-size: 1rem;
   }
 
-  /* Reveal ------------------------------------------------------------ */
-  @media (prefers-reduced-motion: no-preference) {
-    .js [data-reveal] {
+  /* Reveal ------------------------------------------------------------
+     Content is visible by default. Where the browser supports scroll-driven
+     animations and the user has not asked for reduced motion, sections fade
+     up as they enter the viewport. No JavaScript involved. */
+  @keyframes reveal {
+    from {
       opacity: 0;
       transform: translateY(0.75rem);
-      transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
     }
+  }
 
-    .js [data-reveal][data-revealed] {
-      opacity: 1;
-      transform: none;
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      [data-reveal] {
+        animation: reveal linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 30%;
+      }
+    }
+  }
+
+  @media print {
+    [data-reveal] {
+      animation: none;
     }
   }
 }

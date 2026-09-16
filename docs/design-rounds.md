@@ -156,3 +156,147 @@ is original content and stays unless he decides otherwise.
 - Fraunces italic files dropped from the self-hosted font set (unused).
 - Inline styles replaced by utility classes.
 - Sci-Hub / Z-Library links kept, flagged for the owner.
+
+---
+
+## Round 2 — drafts labelled, timeline opt-in (commit `e7d2f5b`)
+
+**What they saw:** the placeholder Latin collapsed behind "Placeholder text
+(draft)" disclosures, "Former member" labels, an opt-in timeline button, the
+portrait first on phones, self-hosted fonts.
+
+### Phase 1 · Individual reactions
+
+🇨🇳 **Mei:** Now the home page reads like a finished person with an
+unfinished appendix, which is the correct order. I would never press "Load
+timeline", but I respect being asked.
+
+🇮🇳 **Priya:** "Placeholder text (draft) · 35 paragraphs" made me laugh out
+loud — that is honest. The CV lines are still just sentences, though. I want
+a row of the things I can actually click: ORCID, Scholar, e-mail, right under
+his name.
+
+🇯🇵 **Yuki:** I printed the Lab page to PDF to read on the train. It ends
+after "Positions". The people are gone. The same happens in reader mode.
+
+🇧🇷 **Camila:** Face first on the phone. Gente, I'm happy. The little
+"PORTRAIT · NOVEMBER 2020" under it is a nice touch, it feels like a museum
+label.
+
+🇪🇸 **Sofía:** On my phone the line above his name — associate professor,
+department, OsloMet — wraps into three lines of typewriter capitals. It
+looks like a terminal error, not a title.
+
+🇬🇧 **Rosie:** The footer says "follow me on the following platforms" and
+four of the six buttons are greyed out. Six buttons, two work. It's a bit
+"exit through the gift shop, gift shop closed".
+
+🇩🇪 **Lena:** Progress. Two things remain imprecise: the contact list says
+"Role / Role / Role" three times instead of "Roles" once, and "Information
+about the lab" is a description, not a name — the names are Mørk Lab and
+Living Dynamics Lab, they should be the heading.
+
+🇸🇦 **Noor:** Dark mode follows my phone, but my phone is on light for family
+reasons and I would still want this site dark at night. A switch on the page
+would let me choose in the moment, without changing anything visible on my
+device.
+
+🇮🇹 **Giulia:** The alumni list now says "Former member" three times, like a
+spreadsheet column. The heading already says alumni; let the names breathe.
+
+🇵🇱 **Kasia:** Look, the honesty labels fixed my main problem. But Yuki is
+right — I scrolled fast on the Lab page and for a second the members section
+was blank. If it can be blank for a second, it can be blank forever on a bad
+day.
+
+### Phase 2 · Discussion
+
+**Round 1**
+
+🇯🇵 Yuki: The disappearing sections are the priority.
+🇵🇱 Kasia: Agreed. Content that depends on a script to become visible is
+content that can fail.
+🇩🇪 Lena: The fix is in CSS, not in more JavaScript. It should be visible by
+default and animated only as an extra.
+🇬🇧 Rosie: I didn't notice it, but I also didn't print anything since 2019.
+
+**Round 2**
+
+🇮🇳 Priya: Quick links under the name. ORCID, Scholar, e-mail. Three things.
+🇨🇳 Mei: Three, not six. The moment it becomes a toolbar it is a corporate
+site.
+🇧🇷 Camila: And "e-mail" as a real button so on the phone it just opens.
+🇸🇦 Noor: With the institutional address, not the Gmail. The Gmail is
+already in the paragraph; it doesn't need a button too.
+
+**Round 3**
+
+🇮🇹 Giulia: Can we talk about the footer? (gestures) The grey circles.
+🇬🇧 Rosie: Keep the icons, he clearly intends to fill them. Just don't let my
+keyboard land on a button that does nothing.
+🇪🇸 Sofía: And the typewriter title line on mobile — shorter, or wrap it
+kindly.
+🇩🇪 Lena: "Wrap it kindly" is not a specification. Balance the lines and
+reduce the letter-spacing on small screens.
+🇪🇸 Sofía: That is what I said.
+
+### Phase 3 · Heat check
+
+| | Verdict | Why |
+|---|---|---|
+| 🇨🇳 Mei | 👍 | Correct hierarchy of truth now |
+| 🇮🇳 Priya | Mixed | Still no quick way to the things I'd click |
+| 🇯🇵 Yuki | Mixed | Sections vanish in print and reader mode |
+| 🇧🇷 Camila | 👍 | Face first, done |
+| 🇪🇸 Sofía | Mixed | Mobile kicker line |
+| 🇬🇧 Rosie | 👍 | Footer quibble only |
+| 🇩🇪 Lena | Mixed | Three precision items, one of them structural |
+| 🇸🇦 Noor | 👍 | Wants a theme switch, otherwise sold |
+| 🇮🇹 Giulia | 👍 | Let the alumni names breathe |
+| 🇵🇱 Kasia | Mixed | Robustness of the reveal |
+
+### Phase 4 · Moderator summary
+
+**Consensus (10/10):** the draft disclosures resolved round 1's central
+objection. Nobody asked for the placeholder text to be removed.
+
+**Consensus (8/10):** below-the-fold sections must be visible without
+JavaScript succeeding; reveal animation should be an enhancement in CSS.
+
+**Fault lines:**
+- *Quick links.* Priya, Camila, Noor want them; Mei accepts three at most.
+  Resolution: exactly three, institutional e-mail only.
+- *Footer icons.* Rosie and Giulia want them kept as intent; Lena wants dead
+  controls out of the tab order. Resolution: kept, dimmed, unfocusable.
+
+**Standout insights:**
+- Yuki and Kasia independently found the reveal failure by different routes
+  (print, fast scroll).
+- Noor's theme switch is a privacy-adjacent request: choice on the page, not
+  on the device.
+- Lena's naming point: lab names should be the heading; the description
+  becomes the eyebrow.
+
+**Recommendations, ranked by endorsement:**
+1. Make reveals CSS-only with content visible by default (8).
+2. Three quick links under the hero (7).
+3. Dead footer links unfocusable and clearly dimmed (7).
+4. Mobile kicker: balanced lines, tighter tracking (6).
+5. "Roles" grouped once; alumni labels reduced to names (6).
+6. Lab heading uses the lab names (5).
+7. On-page theme switch (4; scheduled for a later round).
+
+### Changes made for iteration 3
+- Reveal now uses a CSS scroll-driven animation (`animation-timeline: view()`)
+  inside `@supports`, with `prefers-reduced-motion` respected. Without
+  support, everything is simply visible. The IntersectionObserver code is
+  removed.
+- Three quick links (ORCID, Google Scholar, institutional e-mail) under the
+  hero text.
+- Contact list groups the three roles under one "Roles" term.
+- Lab page: heading is "Mørk Lab, Living Dynamics Lab"; eyebrow is
+  "Information about the lab". Alumni rows show names only.
+- Footer: unlinked platform icons carry `aria-disabled` and are removed
+  from the tab order; the icons themselves stay.
+- Mobile kicker: balanced wrapping and reduced letter-spacing under 52em.
+- Screenshot script scrolls each page before capture.

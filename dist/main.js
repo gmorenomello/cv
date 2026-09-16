@@ -55,24 +55,11 @@ function initScrollToTop() {
     });
     update();
 }
-/* ---------- Reveal on scroll ---------- */
-function initReveal() {
-    const targets = document.querySelectorAll('[data-reveal]');
-    if (targets.length === 0)
-        return;
-    if (prefersReducedMotion.matches || !('IntersectionObserver' in window)) {
-        targets.forEach((el) => el.setAttribute('data-revealed', ''));
-        return;
-    }
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.setAttribute('data-revealed', '');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
-    targets.forEach((el) => observer.observe(el));
+/* ---------- Disabled placeholder links ---------- */
+function initDisabledLinks() {
+    document.querySelectorAll('a[aria-disabled="true"]').forEach((link) => {
+        link.addEventListener('click', (event) => event.preventDefault());
+    });
 }
 /* ---------- Obfuscated e-mail ---------- */
 function initEmailLinks() {
@@ -152,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
     markActiveNavLink();
     syncMobileNav();
     initScrollToTop();
-    initReveal();
+    initDisabledLinks();
     initEmailLinks();
     initLinkFilter();
     initTimeline();

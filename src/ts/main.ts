@@ -70,30 +70,12 @@ function initScrollToTop(): void {
   update();
 }
 
-/* ---------- Reveal on scroll ---------- */
+/* ---------- Disabled placeholder links ---------- */
 
-function initReveal(): void {
-  const targets = document.querySelectorAll<HTMLElement>('[data-reveal]');
-  if (targets.length === 0) return;
-
-  if (prefersReducedMotion.matches || !('IntersectionObserver' in window)) {
-    targets.forEach((el) => el.setAttribute('data-revealed', ''));
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          (entry.target as HTMLElement).setAttribute('data-revealed', '');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { rootMargin: '0px 0px -8% 0px', threshold: 0.1 }
-  );
-
-  targets.forEach((el) => observer.observe(el));
+function initDisabledLinks(): void {
+  document.querySelectorAll<HTMLAnchorElement>('a[aria-disabled="true"]').forEach((link) => {
+    link.addEventListener('click', (event: Event) => event.preventDefault());
+  });
 }
 
 /* ---------- Obfuscated e-mail ---------- */
@@ -186,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
   markActiveNavLink();
   syncMobileNav();
   initScrollToTop();
-  initReveal();
+  initDisabledLinks();
   initEmailLinks();
   initLinkFilter();
   initTimeline();
