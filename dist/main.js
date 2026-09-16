@@ -188,6 +188,21 @@ function initTimeline() {
         document.body.append(script);
     });
 }
+/* ---------- Print: expand draft disclosures ---------- */
+function initPrintExpansion() {
+    const opened = [];
+    window.addEventListener('beforeprint', () => {
+        document.querySelectorAll('details.draft:not([open])').forEach((d) => {
+            d.open = true;
+            opened.push(d);
+        });
+    });
+    window.addEventListener('afterprint', () => {
+        opened.splice(0).forEach((d) => {
+            d.open = false;
+        });
+    });
+}
 /* ---------- Boot ---------- */
 document.documentElement.classList.add('js');
 document.addEventListener('DOMContentLoaded', () => {
@@ -199,4 +214,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initEmailLinks();
     initLinkFilter();
     initTimeline();
+    initPrintExpansion();
 });

@@ -549,3 +549,79 @@ Recorded for the owner; not removed.
 - `404.html` in the same design for GitHub Pages.
 - README rewritten for the static stack: structure, build, preview,
   screenshots, deployment.
+
+---
+
+## Round 5 — final acceptance (commit `73d8651`)
+
+**What they saw:** switch after the menu, print stylesheet, 2021–2026,
+"Cover to come", 404 page, README. They were asked one question: would you
+send this link to someone as the professor's official page?
+
+### Phase 1 · Individual reactions
+
+🇨🇳 **Mei:** Yes. It now reads as a person who knows what is finished and
+what is not, and says so. That is the whole of professional credibility.
+
+🇮🇳 **Priya:** Yes. Reach him in one tap, read him in one screen, and nothing
+tracks me until I say so.
+
+🇯🇵 **Yuki:** Yes, with one note. On paper the reading section printed as an
+empty frame. The words were there in the browser and not on the page; it
+should be the other way round.
+
+🇧🇷 **Camila:** Yes. It has a face, a warm one, and a name I can say.
+
+🇪🇸 **Sofía:** Yes, and I will say for the record and for the last time:
+Sci-Hub and Z-Library are on the Links page. His call.
+
+🇬🇧 **Rosie:** Yes. "2021–2026" — a man with a maintained website. Rarer
+than it should be.
+
+🇩🇪 **Lena:** Yes. Structure, keyboard, contrast, print, documentation,
+not-found page. The earlier page title said "Personal Website"; the new
+titles dropped that word. Trivial, but it was his phrase.
+
+🇸🇦 **Noor:** Yes. It respects the room I read it in.
+
+🇮🇹 **Giulia:** Yes. The night walk past the campus, and the name set large
+on paper. Two moments, which is two more than most.
+
+🇵🇱 **Kasia:** Look. Yes.
+
+### Phase 2 · Discussion
+
+🇯🇵 Yuki: The empty frame on paper.
+🇩🇪 Lena: A browser quirk — closed disclosures are not rendered even when
+told to be visible. There is a pseudo-element for it, and a fallback that
+simply opens them before printing.
+🇵🇱 Kasia: Then do both. Belt and braces.
+🇩🇪 Lena: And restore the word "personal" in the title.
+🇬🇧 Rosie: We are now editing a `<title>`. I think we're done.
+
+### Phase 3 · Heat check
+
+Ten thumbs up. Sofía's is accompanied by a footnote.
+
+### Phase 4 · Moderator summary
+
+**Consensus (10/10):** ship. The panel would forward the link as the
+professor's official page.
+
+**Open item for the owner (Sofía, supported in earlier rounds by Lena and
+Mei):** Sci-Hub and Z-Library remain on the Links page as original
+content. This is the only content-level decision the panel could not make
+on the owner's behalf.
+
+**Final changes:**
+- Print: `::details-content` forced visible and a `beforeprint` handler
+  that opens draft disclosures, restored after printing.
+- Home page title restored to "Guga's Personal Website".
+
+**What changed across the five rounds, in one paragraph:** the site went
+from a PHP template with placeholder text presented as content to a static
+HTML/CSS/TypeScript site with a committed art direction, all original
+content intact, drafts honestly labelled, consent-based third-party
+loading, a persisted theme choice, keyboard and reduced-motion support,
+print output, a 404 page and documentation. Nothing the owner wrote was
+removed.

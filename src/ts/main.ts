@@ -222,6 +222,23 @@ function initTimeline(): void {
   });
 }
 
+/* ---------- Print: expand draft disclosures ---------- */
+
+function initPrintExpansion(): void {
+  const opened: HTMLDetailsElement[] = [];
+  window.addEventListener('beforeprint', () => {
+    document.querySelectorAll<HTMLDetailsElement>('details.draft:not([open])').forEach((d) => {
+      d.open = true;
+      opened.push(d);
+    });
+  });
+  window.addEventListener('afterprint', () => {
+    opened.splice(0).forEach((d) => {
+      d.open = false;
+    });
+  });
+}
+
 /* ---------- Boot ---------- */
 
 document.documentElement.classList.add('js');
@@ -235,4 +252,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initEmailLinks();
   initLinkFilter();
   initTimeline();
+  initPrintExpansion();
 });

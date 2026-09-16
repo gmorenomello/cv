@@ -1471,6 +1471,11 @@
     display: block;
   }
 
+  .draft::details-content {
+    content-visibility: visible;
+    display: block;
+  }
+
   .section,
   .hero,
   .page-head {
